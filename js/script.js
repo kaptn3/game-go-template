@@ -8,11 +8,13 @@ var app = new Vue({
   }
 });
 
-maximum = app.x.length * app.y.length;
+lengthX = app.x.length;
+lengthY = app.y.length;
+maximum = lengthX * lengthY;
 
 // генерация поля
 let count = 0;
-for (let i = 0; i < (app.y.length * app.x.length); i++) {
+for (let i = 0; i < maximum; i++) {
   app.div.push( i );
 }
 
@@ -33,18 +35,18 @@ function go(direction) {
   Vue.set(app.div, app.hero, '0');
   switch (direction) {
     case 'down':      
-      app.hero = overBoundary(app.hero + app.x.length);
+      app.hero = overBoundary(app.hero + lengthX);
       break;
     case 'up':
-      app.hero = overBoundary(app.hero - app.x.length);
+      app.hero = overBoundary(app.hero - lengthX);
       break;
     case 'left':
-      if ((app.hero - 1) % app.x.length !== 3) {
+      if ((app.hero - 1) % lengthX !== (lengthX - 1)) {
         app.hero = overBoundary(app.hero - 1);
       }
       break;
     case 'right':
-      if ((app.hero + 1) % app.x.length !== 0) {
+      if ((app.hero + 1) % lengthX !== 0) {
         app.hero = overBoundary(app.hero + 1);
       }
       break;
