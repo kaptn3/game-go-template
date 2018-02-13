@@ -1,8 +1,8 @@
 var app = new Vue({
   el: '#app',
   data: {
-    x: [0, 1, 2, 3],
-    y: [0, 1, 2],
+    x: [0, 1, 2, 3, 4],
+    y: [0, 1, 2, 3],
     hero: 4,
     div: []
   }
@@ -17,6 +17,10 @@ let count = 0;
 for (let i = 0; i < maximum; i++) {
   app.div.push( i );
 }
+
+// установка ширины для поля
+const field = document.querySelector('.field');
+field.style.width = lengthX * 50 + 'px';
 
 // установка где находиться герой
 app.div[app.hero] = 'man'; 
@@ -53,8 +57,6 @@ function go(direction) {
   } 
   Vue.set(app.div, app.hero, 'man');
 }
-
-
 
 // считывание нажатой клавиши
 document.addEventListener('keydown', function(e) {
