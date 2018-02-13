@@ -4,7 +4,8 @@ var app = new Vue({
     x: [0, 1, 2, 3, 4],
     y: [0, 1, 2, 3],
     hero: 4,
-    div: []
+    div: [],
+    id: []
   }
 });
 
@@ -12,10 +13,20 @@ lengthX = app.x.length;
 lengthY = app.y.length;
 maximum = lengthX * lengthY;
 
+// стена 
+let wall = [12, 17];
+
 // генерация поля
 let count = 0;
 for (let i = 0; i < maximum; i++) {
-  app.div.push( i );
+  for (let k = 0; k < wall.length; k++) {
+    if (i === wall[k]) {
+      app.div.push( 1 );
+      break;
+    } else if (k === (wall.length - 1)) {
+      app.div.push( 0 );
+    }
+  }
 }
 
 // установка ширины для поля
@@ -27,8 +38,14 @@ app.div[app.hero] = 'man';
 
 // проверка на границу поля
 function overBoundary(hero) { // hero - следующий ход
-  if ( (hero < maximum) && (hero >= 0) ) {
-    return hero;
+  if ( (hero < maximum) && (hero >= 0) /*&& (app.div[hero] === 0)*/ ) {
+    for (let i = 0; i < wall.length; i++) {
+      if (app.div[hero] !== 1) {
+        return hero;
+      } else {
+        return app.hero;
+      }
+    }
   } else {
     return app.hero;
   }
