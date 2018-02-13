@@ -1,22 +1,22 @@
 var app = new Vue({
   el: '#app',
   data: {
-    x: [0, 1, 2, 3, 4],
-    y: [0, 1, 2, 3],
-    hero: 4,
-    div: [],
-    id: []
+    x: 0,
+    y: 0,
+    hero: 18,
+    div: []
   }
 });
 
-lengthX = app.x.length;
-lengthY = app.y.length;
-maximum = lengthX * lengthY;
+// config игры
+x = 5;
+y = 6;
+maximum = x * y;
 
 // стена 
 let wall = [12, 17];
 
-// генерация поля
+// генерация поля со стенами
 let count = 0;
 for (let i = 0; i < maximum; i++) {
   for (let k = 0; k < wall.length; k++) {
@@ -31,7 +31,7 @@ for (let i = 0; i < maximum; i++) {
 
 // установка ширины для поля
 const field = document.querySelector('.field');
-field.style.width = lengthX * 50 + 'px';
+field.style.width = x * 50 + 'px';
 
 // установка где находиться герой
 app.div[app.hero] = 'man'; 
@@ -56,18 +56,18 @@ function go(direction) {
   Vue.set(app.div, app.hero, '0');
   switch (direction) {
     case 'down':      
-      app.hero = overBoundary(app.hero + lengthX);
+      app.hero = overBoundary(app.hero + x);
       break;
     case 'up':
-      app.hero = overBoundary(app.hero - lengthX);
+      app.hero = overBoundary(app.hero - x);
       break;
     case 'left':
-      if ((app.hero - 1) % lengthX !== (lengthX - 1)) {
+      if ((app.hero - 1) % x !== (x - 1)) {
         app.hero = overBoundary(app.hero - 1);
       }
       break;
     case 'right':
-      if ((app.hero + 1) % lengthX !== 0) {
+      if ((app.hero + 1) % x !== 0) {
         app.hero = overBoundary(app.hero + 1);
       }
       break;
