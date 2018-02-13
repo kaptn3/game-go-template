@@ -3,10 +3,12 @@ var app = new Vue({
   data: {
     x: [0, 1, 2, 3],
     y: [0, 1, 2],
-    hero: 1,
+    hero: 4,
     div: []
   }
 });
+
+maximum = app.x.length * app.y.length;
 
 // генерация поля
 let count = 0;
@@ -14,8 +16,11 @@ for (let i = 0; i < (app.y.length * app.x.length); i++) {
   app.div.push( i );
 }
 
+// установка где находиться герой
+app.div[app.hero] = 'man'; 
+
 // проверка на границу поля
-function overBoundary(hero) {
+function overBoundary(hero) { // hero - следующий ход
   if ( (hero < maximum) && (hero >= 0) ) {
     return hero;
   } else {
@@ -34,16 +39,20 @@ function go(direction) {
       app.hero = overBoundary(app.hero - app.x.length);
       break;
     case 'left':
-      app.hero = overBoundary(app.hero - 1);
+      if ((app.hero - 1) % app.x.length !== 3) {
+        app.hero = overBoundary(app.hero - 1);
+      }
       break;
     case 'right':
-      app.hero = overBoundary(app.hero + 1);
+      if ((app.hero + 1) % app.x.length !== 0) {
+        app.hero = overBoundary(app.hero + 1);
+      }
       break;
   } 
   Vue.set(app.div, app.hero, 'man');
 }
 
-app.div[app.hero] = 'man'; // установка где находиться герой
+
 
 // считывание нажатой клавиши
 document.addEventListener('keydown', function(e) {
