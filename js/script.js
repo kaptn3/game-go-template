@@ -8,25 +8,36 @@ var app = new Vue({
   }
 });
 
+// генерация поля
 let count = 0;
 for (let i = 0; i < (app.y.length * app.x.length); i++) {
   app.div.push( i );
 }
 
+// проверка на границу поля
+function overBoundary(hero) {
+  if ( (hero < maximum) && (hero >= 0) ) {
+    return hero;
+  } else {
+    return app.hero;
+  }
+}
+
+// движение
 function go(direction) {
   Vue.set(app.div, app.hero, '0');
   switch (direction) {
-    case 'down':
-      app.hero += app.x.length;
+    case 'down':      
+      app.hero = overBoundary(app.hero + app.x.length);
       break;
     case 'up':
-      app.hero -= app.x.length;
+      app.hero = overBoundary(app.hero - app.x.length);
       break;
     case 'left':
-      app.hero -= 1;
+      app.hero = overBoundary(app.hero - 1);
       break;
     case 'right':
-      app.hero += 1;
+      app.hero = overBoundary(app.hero + 1);
       break;
   } 
   Vue.set(app.div, app.hero, 'man');
