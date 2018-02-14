@@ -3,14 +3,16 @@ var app = new Vue({
   data: {
     x: 0,
     y: 0,
-    hero: 18,
+    hero: 50,
     div: []
   }
 });
 
 // config игры
-x = 5;
-y = 6;
+x = 20;
+y = 20;
+app.x = x;
+app.y = y;
 maximum = x * y;
 
 // стена 
@@ -24,17 +26,17 @@ for (let i = 0; i < maximum; i++) {
       app.div.push( 1 );
       break;
     } else if (k === (wall.length - 1)) {
-      app.div.push( 0 );
+      app.div.push( '.' );
     }
   }
 }
 
 // установка ширины для поля
-const field = document.querySelector('.field');
-field.style.width = x * 50 + 'px';
+const field = document.querySelectorAll('.field');
+
 
 // установка где находиться герой
-app.div[app.hero] = 'man'; 
+app.div[app.hero] = 'm'; 
 
 // проверка на границу поля
 function overBoundary(hero) { // hero - следующий ход
@@ -53,7 +55,7 @@ function overBoundary(hero) { // hero - следующий ход
 
 // движение
 function go(direction) {
-  Vue.set(app.div, app.hero, '0');
+  Vue.set(app.div, app.hero, '.');
   switch (direction) {
     case 'down':      
       app.hero = overBoundary(app.hero + x);
@@ -72,11 +74,11 @@ function go(direction) {
       }
       break;
   } 
-  Vue.set(app.div, app.hero, 'man');
+  Vue.set(app.div, app.hero, 'm');
 }
 
 // считывание нажатой клавиши
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keyup', function(e) {
   var key = e.key + e.location;
   if ((key === 'ArrowUp0') || (key === 'w0') || (key === 'ц0')) {
     go('up');  
